@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,6 +16,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
   const location = useLocation();
+  const [isDesktopHovered, setIsDesktopHovered] = useState(false);
 
   const menuItems = [
     { icon: FiGrid, label: 'Dashboard', path: '/' },
@@ -27,10 +29,12 @@ const Sidebar = ({ isOpen, onClose }) => {
     return location.pathname.startsWith(path);
   };
 
-  const SidebarContent = () => (
+  const SidebarContent = ({ isExpanded = false }) => (
     <div className="flex flex-col h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
       {/* Logo */}
-      <div className="flex items-center justify-center h-[90px] border-b border-gray-200 dark:border-gray-800">
+      <div className={`flex items-center h-[90px] border-b border-gray-200 dark:border-gray-800 transition-all duration-300 ${
+        isExpanded ? 'justify-start pl-4 pr-3' : 'justify-center'
+      }`}>
         <div className="relative">
           {/* Hexagon Logo */}
           <div className="w-[54px] h-[54px] bg-primary rounded-lg flex items-center justify-center relative">
@@ -42,6 +46,13 @@ const Sidebar = ({ isOpen, onClose }) => {
           {/* Orange dot */}
           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-accent-orange rounded-full"></div>
         </div>
+        <span
+          className={`ml-3 text-base font-semibold text-gray-900 dark:text-white transition-all duration-300 whitespace-nowrap overflow-hidden ${
+            isExpanded ? 'opacity-100 max-w-[140px]' : 'opacity-0 max-w-0'
+          }`}
+        >
+          Finance UI
+        </span>
       </div>
 
       {/* Navigation */}
@@ -51,7 +62,9 @@ const Sidebar = ({ isOpen, onClose }) => {
             <li key={item.path}>
               <NavLink
                 to={item.path}
-                className={`nav-item w-full ${isActive(item.path) ? 'nav-item-active' : ''}`}
+                className={`nav-item w-full transition-all duration-300 ${
+                  isExpanded ? '!justify-center gap-3' : 'justify-center'
+                } ${isActive(item.path) ? 'nav-item-active' : ''}`}
                 aria-label={item.label}
               >
                 <item.icon 
@@ -61,6 +74,13 @@ const Sidebar = ({ isOpen, onClose }) => {
                       : 'text-gray-400 dark:text-gray-500 hover:text-primary dark:hover:text-primary-light'
                   }`} 
                 />
+                <span
+                  className={`text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${
+                    isActive(item.path) ? 'text-primary dark:text-primary-light' : 'text-gray-600 dark:text-gray-300'
+                  } ${isExpanded ? 'opacity-100 max-w-[120px]' : 'opacity-0 max-w-0'}`}
+                >
+                  {item.label}
+                </span>
               </NavLink>
             </li>
           ))}
@@ -71,7 +91,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       <div className="pb-8 space-y-2">
         <button
           onClick={() => dispatch(toggleDarkMode())}
-          className="nav-item w-full"
+          className={`nav-item w-full transition-all duration-300 ${
+            isExpanded ? '!justify-center gap-3' : 'justify-center'
+          }`}
           aria-label="Toggle theme"
         >
           {darkMode ? (
@@ -79,6 +101,13 @@ const Sidebar = ({ isOpen, onClose }) => {
           ) : (
             <FiMoon className="w-6 h-6 text-gray-400 hover:text-primary" />
           )}
+          <span
+            className={`text-sm font-medium text-gray-600 dark:text-gray-300 whitespace-nowrap overflow-hidden transition-all duration-300 ${
+              isExpanded ? 'opacity-100 max-w-[120px]' : 'opacity-0 max-w-0'
+            }`}
+          >
+            {darkMode ? 'Light Mode' : 'Dark Mode'}
+          </span>
         </button>
       </div>
     </div>
@@ -87,11 +116,18 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block fixed left-0 top-0 bottom-0 w-[102px] z-50">
-        <SidebarContent />
+      <motion.aside
+        className="hidden lg:block fixed left-0 top-0 bottom-0 z-50 overflow-hidden"
+        initial={false}
+        animate={{ width: isDesktopHovered ? 220 : 102 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+        onMouseEnter={() => setIsDesktopHovered(true)}
+        onMouseLeave={() => setIsDesktopHovered(false)}
+      >
+        <SidebarContent isExpanded={isDesktopHovered} />
         {/* Right border line */}
         <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800"></div>
-      </aside>
+      </motion.aside>
 
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
@@ -109,7 +145,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="lg:hidden fixed left-0 top-0 bottom-0 w-[240px] z-50"
+              className="lg:hidden fixed left-0 top-0 bottom-0 w-[220px] z-50"
             >
               <div className="flex flex-col h-full bg-white dark:bg-gray-900">
                 {/* Mobile header */}
