@@ -1,0 +1,115 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        // Figma Design Color Palette
+        primary: {
+          DEFAULT: '#51459E',
+          light: '#6B5FB8',
+          dark: '#3D3278',
+          50: '#F5F3FF',
+          100: '#EDE9FE',
+          200: '#DDD6FE',
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#51459E',
+          600: '#4F46BA',
+          700: '#3D3278',
+          800: '#2E2560',
+          900: '#1E1840',
+        },
+        accent: {
+          DEFAULT: '#FF7F5C',
+          light: '#F9896B',
+          dark: '#FF6B47',
+          coral: '#FF7548',
+          orange: '#FC9D10',
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#FF7F5C',
+          600: '#F9896B',
+        },
+        success: {
+          DEFAULT: '#24CCA7',
+          light: '#50BC8F',
+          dark: '#27AE60',
+          50: '#ECFDF5',
+          100: '#D1FAE5',
+          200: '#A7F3D0',
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#24CCA7',
+          600: '#27AE60',
+        },
+        danger: {
+          DEFAULT: '#E63956',
+          pink: '#FF4975',
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#E63956',
+          600: '#DC2626',
+        },
+        chart: {
+          purple: '#6236FF',
+          orange: '#FE7239',
+        },
+        // Proper dark mode colors (black/gray, not purple)
+        dark: {
+          DEFAULT: '#111111',
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
+          950: '#030712',
+        },
+        grey: {
+          DEFAULT: '#6A6B73',
+          light: '#848B91',
+          border: '#E6E6E6',
+          bg: '#F7F8FD',
+          divider: '#E7E8FC',
+          text: '#7C8DB5',
+        },
+        card: {
+          bg: '#FEFEFF',
+        }
+      },
+      fontFamily: {
+        sans: ['Google Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Gilroy', 'Google Sans', 'sans-serif'],
+      },
+      boxShadow: {
+        'card': '0px 100px 80px rgba(41, 72, 152, 0.05), 0px 64.8148px 46.8519px rgba(41, 72, 152, 0.037963), 0px 38.5185px 25.4815px rgba(41, 72, 152, 0.0303704), 0px 20px 13px rgba(41, 72, 152, 0.025), 0px 8.14815px 6.51852px rgba(41, 72, 152, 0.0196296), 0px 1.85185px 3.14815px rgba(41, 72, 152, 0.012037)',
+        'card-sm': '0px 20px 13px rgba(41, 72, 152, 0.025), 0px 8.14815px 6.51852px rgba(41, 72, 152, 0.02)',
+        'card-dark': '0px 20px 13px rgba(0, 0, 0, 0.15), 0px 8px 6px rgba(0, 0, 0, 0.1)',
+        'purple': '0px 122.962px 98.3699px rgba(74, 43, 220, 0.25), 0px 79.6978px 57.6101px rgba(74, 43, 220, 0.189815), 0px 47.3633px 31.3326px rgba(74, 43, 220, 0.151852), 0px 24.5925px 15.9851px rgba(74, 43, 220, 0.125)',
+        'orange': '0px 122.962px 98.3699px rgba(220, 129, 43, 0.25), 0px 79.6978px 57.6101px rgba(220, 129, 43, 0.189815), 0px 47.3633px 31.3326px rgba(220, 129, 43, 0.151852), 0px 24.5925px 15.9851px rgba(220, 129, 43, 0.125)',
+      },
+      borderRadius: {
+        'xl': '10px',
+        '2xl': '16px',
+        '3xl': '18px',
+        '4xl': '30px',
+      }
+    },
+  },
+  plugins: [],
+}
